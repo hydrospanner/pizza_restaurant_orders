@@ -51,3 +51,6 @@ class Order(models.Model):
     added_on = models.DateTimeField(auto_now=True, null=True)
     fulfilled = models.BooleanField(default=False)
     placed = models.BooleanField(default=False)
+
+    def cost(self):
+        return sum([pizza.cost() for pizza in self.pizzas.all()])

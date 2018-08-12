@@ -25,13 +25,14 @@ def place_order(request):
 
     if request.method == 'POST':
         open_order.placed = True
+        open_order.cost = open_order.cost()
         open_order.save()
         # thanks for ordering page
         return HttpResponseRedirect(reverse("index"))
     else:
         form = OrderForm()
         pizzas = open_order.pizzas.all()
-        return render(request, 'orders/order.html', {'form': form, 'pizzas': pizzas})
+        return render(request, 'orders/order.html', {'form': form, 'pizzas': pizzas, 'total': open_order.cost()})
 
 def add_pizza(request):
     if request.method == 'POST':
@@ -45,4 +46,3 @@ def add_pizza(request):
             pizzas = open_order.pizzas.all()
         form = OrderForm()
         return HttpResponseRedirect(reverse("order"))
-        # return render(request, 'orders/order.html', {'form': form, 'pizzas': pizzas})
