@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-# from django.contrib.auth.models import User
+import datetime
 
 
 from .models import Topping, Order
@@ -14,12 +14,11 @@ def index(request):
     return render(request, 'orders/index.html', context)
 
 def thanks(request):
-    render(request, 'orders/thanks.html')
+    return render(request, 'orders/thanks.html')
 
 def place_order(request):
     # check if an unplaced order exists for this user. 
     # if not create a new order and save it. 
-    # add pizzas in order to context.
     try:
         open_order = Order.objects.get(user=request.user, placed=False)
     except Order.DoesNotExist:
@@ -29,6 +28,7 @@ def place_order(request):
     if request.method == 'POST':
         open_order.placed = True
         open_order.cost = open_order.get_cost()
+        open_order.added_on = datetime.datetime.now()
         open_order.save()
         return HttpResponseRedirect(reverse("thanks"))
     else:
