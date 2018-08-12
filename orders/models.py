@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 
 class PizzaCrust(models.Model):
@@ -52,5 +53,10 @@ class Order(models.Model):
     fulfilled = models.BooleanField(default=False)
     placed = models.BooleanField(default=False)
 
-    def cost(self):
+    def get_cost(self):
         return sum([pizza.cost() for pizza in self.pizzas.all()])
+
+    def __str__(self):
+        time = self.added_on.strftime('%H:%M:%S')
+        return f'{self.user.username} on {time}'
+        

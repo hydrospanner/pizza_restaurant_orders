@@ -13,6 +13,9 @@ def index(request):
     context = {'toppings': toppings}
     return render(request, 'orders/index.html', context)
 
+def thanks(request):
+    render(request, 'orders/thanks.html')
+
 def place_order(request):
     # check if an unplaced order exists for this user. 
     # if not create a new order and save it. 
@@ -25,14 +28,13 @@ def place_order(request):
 
     if request.method == 'POST':
         open_order.placed = True
-        open_order.cost = open_order.cost()
+        open_order.cost = open_order.get_cost()
         open_order.save()
-        # thanks for ordering page
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("thanks"))
     else:
         form = OrderForm()
         pizzas = open_order.pizzas.all()
-        return render(request, 'orders/order.html', {'form': form, 'pizzas': pizzas, 'total': open_order.cost()})
+        return render(request, 'orders/order.html', {'form': form, 'pizzas': pizzas, 'total': open_order.get_cost()})
 
 def add_pizza(request):
     if request.method == 'POST':

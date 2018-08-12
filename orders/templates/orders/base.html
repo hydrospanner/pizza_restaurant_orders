@@ -35,12 +35,9 @@
                     <a class="nav-link" href="{% url 'signup' %}">Create an Account</a>
                 </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">My Cart</a>
-                </li>
             </ul>
             <span class="navbar-text">
-                {% if user.is_authenticated %}Hello, {{ user.username }}.{% endif %}
+                {% if user.is_authenticated %}Hello, {{ user.username }}{% endif %}
             </span>
         </div>
     </nav>
