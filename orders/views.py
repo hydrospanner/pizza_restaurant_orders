@@ -24,9 +24,8 @@ def place_order(request):
         open_order.save()
 
     if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
+        open_order.placed = True
+        open_order.save()
         # thanks for ordering page
         return HttpResponseRedirect(reverse("index"))
     else:

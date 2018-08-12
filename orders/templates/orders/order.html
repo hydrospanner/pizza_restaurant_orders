@@ -19,9 +19,9 @@
         {% for error in field.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
-
         {% endfor %}
-        <button type="submit" name="add-pizza">Add Pizza</button>
+        
+        <button type="submit" name="add-pizza" class="btn btn-secondary">Add Pizza</button>
     </form>
     <div id="cart">
         <h3>My Cart</h3>
@@ -38,14 +38,20 @@
             {% for pizza in pizzas %}
             <tr>
                 <td>{{ pizza }}</td>
-                
+                <td>{{ pizza.cost }}</td>
             </tr>
             {% endfor %}
+            <tr>
+                <td>Total</td>
+                <td>Total</td>
+            </tr>
         </table>
         {% endif %}
     </div>
-
-    <h2>Place Order</h2>
-
+    <br />
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
+    </form>
 </div>
 {% endblock %}

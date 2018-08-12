@@ -24,6 +24,11 @@ class Pizza(models.Model):
     crust = models.ForeignKey(PizzaCrust, on_delete=models.CASCADE)
     toppings = models.ManyToManyField(Topping, blank=True)
 
+    def cost(self):
+        base_cost = self.crust.cost
+        toppings_cost = sum([topping.cost for topping in self.toppings.all()])
+        return base_cost + toppings_cost * self.crust.topping_cost_factor
+
     def __str__(self):
         toppings_s = ', '.join([topping.name for topping in self.toppings.all()])
         return f'{self.crust}: {toppings_s}'
