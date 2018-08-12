@@ -1,0 +1,30 @@
+﻿{% extends "orders/base.html" %}
+
+{% block body %}
+<div class="container">
+    <h1>Add a Pizza!🍕</h1>
+
+    <form method="post" id="order-form">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% if field.help_text %}
+            <div style="color: grey">
+                {{ field.help_text|safe }}
+            </div>
+            {% endif %}
+        </p>
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+
+        {% endfor %}
+        <button type="submit" name="add-pizza">Add Pizza</button>
+    </form>
+
+    <h2>Place Order</h2>
+
+</div>
+{% endblock %}

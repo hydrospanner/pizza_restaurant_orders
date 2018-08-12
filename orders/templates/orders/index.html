@@ -9,11 +9,12 @@
     <h3>Toppings</h3>
     <ul>
         {% for topping in toppings %}
-        <li>{{topping}}</li>
+        <li>{{ topping }}</li>
         {% endfor %}
     </ul>
     {% if user.is_authenticated %}
-    <a>Order Online</a>
+    <!--<button onclick="location.href={% url 'order' %}" type="button">HEYYY</button>-->
+    <a href="{% url 'order' %}">I'm Hungary! Let's order. </a>
     {% else %}
     <a href="{% url 'login' %}">Log in</a> or
     <a href="{% url 'signup' %}">Sign up</a>

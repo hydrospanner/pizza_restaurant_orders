@@ -1,6 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
 
 class PizzaCrust(models.Model):
     type = models.CharField(max_length=50)
@@ -28,6 +28,7 @@ class Pizza(models.Model):
         toppings_s = ', '.join([topping.name for topping in self.toppings.all()])
         return f'{self.crust}: {toppings_s}'
 
+
 class Special(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=500, null=True)
@@ -41,4 +42,7 @@ class Special(models.Model):
 class Order(models.Model):
     pizzas = models.ManyToManyField(Pizza)
     cost = models.FloatField()
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    added_on = models.DateTimeField(auto_now=True, null=True)
+    pending = models.BooleanField(default=True)
+    placed = models.BooleanField(default=False)
