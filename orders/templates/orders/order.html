@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="container">
-    <h1>Add a Pizza!🍕</h1>
 
-    <form method="post" id="order-form">
+    <h2>Add a Pizza!🍕</h2>
+    <form method="post" id="order-form" action="/add_pizza">
         {% csrf_token %}
         {% for field in form %}
         <p>
@@ -23,6 +23,27 @@
         {% endfor %}
         <button type="submit" name="add-pizza">Add Pizza</button>
     </form>
+    <div id="cart">
+        <h3>My Cart</h3>
+        {% if not pizzas %}
+        There are no pizzas in your order.
+        {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <td>Pizza</td>
+                    <td>Cost</td>
+                </tr>
+            </thead>
+            {% for pizza in pizzas %}
+            <tr>
+                <td>{{ pizza }}</td>
+                
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
 
     <h2>Place Order</h2>
 

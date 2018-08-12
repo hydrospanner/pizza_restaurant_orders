@@ -44,5 +44,5 @@ class Order(models.Model):
     cost = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     added_on = models.DateTimeField(auto_now=True, null=True)
-    pending = models.BooleanField(default=True)
+    fulfilled = models.BooleanField(default=False)
     placed = models.BooleanField(default=False)
