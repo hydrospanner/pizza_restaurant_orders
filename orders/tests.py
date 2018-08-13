@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 
 from .models import PizzaCrust, Topping, Pizza
 # Create your tests here.
@@ -21,3 +21,9 @@ class OrdersTestCase(TestCase):
     def test_pizza_cost(self):
         pizza1 = Pizza.objects.get(pk=1)
         self.assertEqual(pizza1.cost(), 12.0)
+
+    def test_index(self):
+        c = Client()
+        response = c.get("/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['toppings'].count(), 2)
